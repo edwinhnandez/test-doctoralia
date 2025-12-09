@@ -52,6 +52,22 @@ We will very much appreciate comments about why you've chosen certain solutions!
 - When done, give access to the repo to the hiring manager and other people provided.
 - Send us the link to the PULL REQUEST **in your repo**, so we can review your work.
 
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+composer install
+```
+
+### 2. Run Tests
+
+```bash
+vendor/bin/phpunit
+```
+
+You should see all 31 tests passing!
+
 ## Installation
 
 ### Dependencies
@@ -151,5 +167,3 @@ tests/
     ├── ErrorReporterTest.php
     └── VendorApiClientTest.php
 ```
-
-## Good luck!
