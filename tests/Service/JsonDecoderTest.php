@@ -59,5 +59,12 @@ final class JsonDecoderTest extends TestCase
         $result = $this->decoder->decode('');
         $this->assertNull($result);
     }
+
+    public function testDecodeNullString(): void
+    {
+        // Empty string should return null (not throw exception)
+        $result = $this->decoder->decode('');
+        $this->assertNull($result);
+    }
 }
 

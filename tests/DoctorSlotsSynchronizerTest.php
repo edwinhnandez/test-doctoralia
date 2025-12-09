@@ -72,10 +72,10 @@ final class DoctorSlotsSynchronizerTest extends TestCase
             ->willReturn(null);
 
         $this->doctorRepository
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('save')
             ->with($this->callback(function (Doctor $doctor) {
-                return $doctor->getId() === '1' && $doctor->getName() === 'John Doe';
+                return $doctor->getId() === '1' && $doctor->getName() === 'John Doe' && !$doctor->hasError();
             }));
 
         $this->vendorApiClient
@@ -113,7 +113,7 @@ final class DoctorSlotsSynchronizerTest extends TestCase
             ->willReturn($existingDoctor);
 
         $this->doctorRepository
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('save')
             ->with($this->callback(function (Doctor $doctor) {
                 return $doctor->getName() === 'John Doe Updated' && !$doctor->hasError();

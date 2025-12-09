@@ -18,8 +18,16 @@ final class JsonDecoder implements JsonDecoderInterface
      */
     public function decode(string|false $json): mixed
     {
+        if (false === $json) {
+            return [];
+        }
+
+        if ('' === $json) {
+            return null;
+        }
+
         return json_decode(
-            json: false === $json ? '' : $json,
+            json: $json,
             associative: true,
             depth: 16,
             flags: JSON_THROW_ON_ERROR,

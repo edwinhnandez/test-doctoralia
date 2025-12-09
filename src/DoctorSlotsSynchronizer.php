@@ -84,7 +84,7 @@ class DoctorSlotsSynchronizer
         $doctor->clearError();
         $this->doctorRepository->save($doctor);
 
-        $this->synchronizeDoctorSlots($doctorData['id'], $doctor);
+        $this->processDoctorSlots($doctorData['id'], $doctor);
     }
 
     /**
@@ -94,7 +94,7 @@ class DoctorSlotsSynchronizer
      * @param Doctor $doctor The doctor entity
      * @return void
      */
-    private function synchronizeDoctorSlots(int $doctorId, Doctor $doctor): void
+    private function processDoctorSlots(int $doctorId, Doctor $doctor): void
     {
         try {
             $slotsData = $this->vendorApiClient->getDoctorSlots($doctorId);
