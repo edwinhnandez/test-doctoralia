@@ -53,8 +53,103 @@ We will very much appreciate comments about why you've chosen certain solutions!
 - Send us the link to the PULL REQUEST **in your repo**, so we can review your work.
 
 ## Installation
+
+### Dependencies
+
+Install PHP dependencies using Composer:
+
+```bash
+composer install
+```
+
+### Vendor API
+
 Only the vendor API is dockerized and configured to work with `docker-compose`. However, feel free to dockerize the rest of the project if you find it helpful.
-To run the container, use `docker-compose up -d`.
+
+To run the container, use:
+
+```bash
+docker-compose up -d
+```
+
 After a while, the vendor API serving doctors will be accessible on `http://localhost:2137`.
+
+## Running Tests
+
+Run the test suite using PHPUnit:
+
+```bash
+vendor/bin/phpunit
+```
+
+For verbose output:
+
+```bash
+vendor/bin/phpunit --verbose
+```
+
+## Refactoring Summary
+
+The `DoctorSlotsSynchronizer` class has been refactored following SOLID principles and best practices:
+
+### Key Improvements
+
+1. **Separation of Concerns**: Extracted HTTP client, JSON decoder, name normalizer, slot parser, and error reporter into separate services
+2. **Dependency Injection**: All dependencies are injected via constructor for better testability
+3. **Interface-Based Design**: All services implement interfaces following the Dependency Inversion Principle
+4. **Repository Pattern**: Abstracted data persistence behind repository interfaces
+5. **Comprehensive Testing**: Unit tests written for all components
+
+### Architecture
+
+- **Service Layer**: Business logic components (`src/Service/`)
+- **Repository Layer**: Data persistence abstractions (`src/Repository/`)
+- **Entity Layer**: Domain models (`src/Entity/`)
+- **Test Layer**: Unit tests (`tests/`)
+
+### Documentation
+
+See [REFACTORING.md](REFACTORING.md) for detailed documentation about the refactoring decisions, architecture, and design patterns used.
+
+## Code Structure
+
+```
+src/
+├── DoctorSlotsSynchronizer.php      # Main synchronizer (orchestrator)
+├── StaticDoctorSlotsSynchronizer.php # Static data version for testing
+├── Entity/                           # Domain entities
+│   ├── Doctor.php
+│   └── Slot.php
+├── Repository/                       # Data persistence layer
+│   ├── DoctorRepositoryInterface.php
+│   ├── DoctorRepository.php
+│   ├── SlotRepositoryInterface.php
+│   └── SlotRepository.php
+└── Service/                          # Business logic services
+    ├── HttpClientInterface.php
+    ├── HttpClient.php
+    ├── JsonDecoderInterface.php
+    ├── JsonDecoder.php
+    ├── NameNormalizerInterface.php
+    ├── NameNormalizer.php
+    ├── SlotParserInterface.php
+    ├── SlotParser.php
+    ├── ErrorReporterInterface.php
+    ├── ErrorReporter.php
+    ├── VendorApiClientInterface.php
+    ├── VendorApiClient.php
+    └── StaticVendorApiClient.php
+
+tests/
+├── DoctorSlotsSynchronizerTest.php
+├── Repository/
+│   └── DoctorRepositoryTest.php
+└── Service/
+    ├── NameNormalizerTest.php
+    ├── JsonDecoderTest.php
+    ├── SlotParserTest.php
+    ├── ErrorReporterTest.php
+    └── VendorApiClientTest.php
+```
 
 ## Good luck!

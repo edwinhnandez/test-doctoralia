@@ -17,7 +17,7 @@ final class Slot
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private string $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="integer")
@@ -47,9 +47,19 @@ final class Slot
         $this->createdAt = new DateTime();
     }
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getStart(): DateTime
     {
         return $this->start;
+    }
+
+    public function getEnd(): DateTime
+    {
+        return $this->end;
     }
 
     public function setEnd(DateTime $end): self
